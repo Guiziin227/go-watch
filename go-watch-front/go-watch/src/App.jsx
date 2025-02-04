@@ -8,9 +8,9 @@ export function App() {
           <h1 className="mt-3">Go Movie</h1>
         </div>
         <div className="col text-end">
-          <a href="#!">
+          <Link to="/login">
             <span className="badge bg-success">Login</span>
-          </a>
+          </Link>
         </div>
         <hr className="mb-3" />
       </div>
