@@ -41,7 +41,7 @@ export function App() {
                 Add Movie
               </Link>
               <Link
-                to="/admin"
+                to="/manage-catalogue"
                 className="list-group-item list-group-item-action"
               >
                 Manage catalogue
