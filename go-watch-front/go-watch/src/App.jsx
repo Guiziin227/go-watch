@@ -26,7 +26,7 @@ export function App() {
                 to="/movies"
                 className="list-group-item list-group-item-action"
               >
-                Movie
+                Movies
               </Link>
               <Link
                 to="/genres"
