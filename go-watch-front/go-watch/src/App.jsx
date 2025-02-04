@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 
 export function App() {
   return (
@@ -19,27 +19,39 @@ export function App() {
         <div className="col-md-2">
           <nav>
             <div className="list-group">
-              <a href="/" className="list-group-item list-group-item-action">
+              <Link to="/" className="list-group-item list-group-item-action">
                 Home
-              </a>
-              <a
-                href="/movie"
+              </Link>
+              <Link
+                to="/movies"
                 className="list-group-item list-group-item-action"
               >
-                Movies
-              </a>
-              <a href="#!" className="list-group-item list-group-item-action">
+                Movie
+              </Link>
+              <Link
+                to="/genres"
+                className="list-group-item list-group-item-action"
+              >
                 Genre
-              </a>
-              <a href="#!" className="list-group-item list-group-item-action">
+              </Link>
+              <Link
+                to="/admin/movie/0"
+                className="list-group-item list-group-item-action"
+              >
                 Add Movie
-              </a>
-              <a href="#!" className="list-group-item list-group-item-action">
+              </Link>
+              <Link
+                to="/admin"
+                className="list-group-item list-group-item-action"
+              >
                 Manage catalogue
-              </a>
-              <a href="#!" className="list-group-item list-group-item-action">
+              </Link>
+              <Link
+                to="/graphql"
+                className="list-group-item list-group-item-action"
+              >
                 GraphQL
-              </a>
+              </Link>
             </div>
           </nav>
         </div>
