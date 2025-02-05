@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Input from './form/Input'
 import { useOutletContext } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -9,14 +10,17 @@ export default function Login() {
   const { setJwtToken } = useOutletContext()
   const { setAlertMessage, setAlertClassName } = useOutletContext()
 
+  const navigate = useNavigate()
+
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log('email/pass', email, password)
 
     if (email === 'admin@gmail.com') {
       setJwtToken('abc')
-      setAlertClassName('alert-success')
-      setAlertMessage('Login successful')
+      setAlertClassName('d-none')
+      setAlertMessage('')
+      navigate('/')
     } else {
       setAlertClassName('alert-danger')
       setAlertMessage('Invalid email or password')
