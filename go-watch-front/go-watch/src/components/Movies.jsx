@@ -3,20 +3,37 @@ import { Link } from 'react-router-dom'
 
 export default function Movies() {
   const [movies, setMovies] = useState([])
-
   useEffect(() => {
-    const headers = new Headers()
-    headers.append('Content-Type', 'application/json')
+    // Função assíncrona para buscar os filmes
+    async function fetchMovies() {
+      // Configura os headers da requisição
+      const headers = new Headers()
+      headers.append('Content-Type', 'application/json')
 
-    const requestOptions = {
-      method: 'GET',
-      headers: headers,
+      // Configura as opções da requisição
+      const requestOptions = {
+        method: 'GET',
+        headers: headers,
+      }
+
+      try {
+        // Aguarda a resposta da requisição
+        const response = await fetch(
+          'http://localhost:8080/movies',
+          requestOptions
+        )
+        // Converte a resposta para JSON
+        const data = await response.json()
+        // Atualiza o estado com os dados recebidos
+        setMovies(data)
+      } catch (error) {
+        // Em caso de erro, imprime no console
+        console.log('error', error)
+      }
     }
 
-    fetch('http://localhost:8080/movies', requestOptions)
-      .then((response) => response.json())
-      .then((data) => setMovies(data))
-      .catch((error) => console.log('error', error))
+    // Chama a função para realizar a busca
+    fetchMovies()
   }, [])
 
   return (
