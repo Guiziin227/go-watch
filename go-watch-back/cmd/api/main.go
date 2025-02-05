@@ -24,11 +24,10 @@ func main() {
 
 	
 	//start the server
-	http.HandleFunc("/", Hello)
 
 	log.Printf("Starting server on port %d", port)
 
-	err := http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
+	err := http.ListenAndServe(fmt.Sprintf(":%d", port), app.routes())
 	if err != nil {
 		fmt.Println("Error starting the server: ", err)
 		log.Fatal(err)
