@@ -15,6 +15,9 @@ func (app *application) routes() http.Handler {
 	// Adiciona um middleware que recupera de panics, evitando que erros interrompam o servidor.
 	mux.Use(middleware.Recoverer)
 
+
+	mux.Get("/", app.Home) // Define um manipulador para a rota raiz.
+
 	// Retorna o roteador configurado, que irá gerenciar as rotas da aplicação.
 	return mux
 }

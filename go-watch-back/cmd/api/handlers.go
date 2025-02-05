@@ -5,6 +5,6 @@ import (
 	"net/http"
 )
 
-func Hello(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Hello, World!")
+func (app *application) Home(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello, World! From %s", app.Domain)
 }
