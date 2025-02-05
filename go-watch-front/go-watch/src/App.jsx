@@ -1,6 +1,13 @@
+import { useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 
 export function App() {
+  const [jwtToken, setJwtToken] = useState('')
+
+  const handleLogout = () => {
+    setJwtToken('')
+  }
+
   return (
     <div className="container">
       <div className="row">
@@ -8,9 +15,15 @@ export function App() {
           <h1 className="mt-3">Go Movie</h1>
         </div>
         <div className="col text-end">
-          <Link to="/login">
-            <span className="badge bg-success">Login</span>
-          </Link>
+          {jwtToken === '' ? (
+            <Link to="/login">
+              <span className="badge bg-success">Login</span>
+            </Link>
+          ) : (
+            <a href="#!" onClick={handleLogout}>
+              <span className="badge bg-danger">Logout</span>
+            </a>
+          )}
         </div>
         <hr className="mb-3" />
       </div>
@@ -34,24 +47,28 @@ export function App() {
               >
                 Genre
               </Link>
-              <Link
-                to="/admin/movie/0"
-                className="list-group-item list-group-item-action"
-              >
-                Add Movie
-              </Link>
-              <Link
-                to="/manage-catalogue"
-                className="list-group-item list-group-item-action"
-              >
-                Manage catalogue
-              </Link>
-              <Link
-                to="/graphql"
-                className="list-group-item list-group-item-action"
-              >
-                GraphQL
-              </Link>
+              {jwtToken !== '' && (
+                <>
+                  <Link
+                    to="/admin/movie/0"
+                    className="list-group-item list-group-item-action"
+                  >
+                    Add Movie
+                  </Link>
+                  <Link
+                    to="/manage-catalogue"
+                    className="list-group-item list-group-item-action"
+                  >
+                    Manage catalogue
+                  </Link>
+                  <Link
+                    to="/graphql"
+                    className="list-group-item list-group-item-action"
+                  >
+                    GraphQL
+                  </Link>
+                </>
+              )}
             </div>
           </nav>
         </div>
@@ -62,3 +79,5 @@ export function App() {
     </div>
   )
 }
+
+export default App
