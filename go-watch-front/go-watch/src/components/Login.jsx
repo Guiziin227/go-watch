@@ -7,6 +7,7 @@ export default function Login() {
   const [password, setPassword] = useState('')
 
   const { setJwtToken } = useOutletContext()
+  const { setAlertMessage, setAlertClassName } = useOutletContext()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -14,6 +15,11 @@ export default function Login() {
 
     if (email === 'admin@gmail.com') {
       setJwtToken('abc')
+      setAlertClassName('alert-success')
+      setAlertMessage('Login successful')
+    } else {
+      setAlertClassName('alert-danger')
+      setAlertMessage('Invalid email or password')
     }
   }
 
