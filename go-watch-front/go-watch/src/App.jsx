@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import Alert from './components/Alert'
+import { useNavigate } from 'react-router-dom'
 
 export function App() {
   const [jwtToken, setJwtToken] = useState('')
@@ -8,8 +9,11 @@ export function App() {
   const [alertMessage, setAlertMessage] = useState('')
   const [alertClassName, setAlertClassName] = useState('d-none')
 
+  const navigate = useNavigate()
+
   const handleLogout = () => {
     setJwtToken('')
+    navigate('/login')
   }
 
   return (
