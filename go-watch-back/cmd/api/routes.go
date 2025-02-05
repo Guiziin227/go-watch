@@ -17,6 +17,7 @@ func (app *application) routes() http.Handler {
 
 
 	mux.Get("/", app.Home) // Define um manipulador para a rota raiz.
+	mux.Get("/movies", app.AllMovies) // Define um manipulador para a rota /movies.
 
 	// Retorna o roteador configurado, que irá gerenciar as rotas da aplicação.
 	return mux
