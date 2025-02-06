@@ -1,0 +1,18 @@
+# Ignorar arquivos YAML específicos
+*.yml
+*.yaml
+
+# Exceção: permitir o versionamento do docker-compose padrão (! indica que o arquivo deve ser incluído)
+!docker-compose.yml
+
+# Ignorar arquivos de ambiente que podem conter credenciais
+.env
+.env.*
+
+# Ignorar volumes e dados temporários do Docker
+docker-data/
+volumes/
+
+# Ignorar arquivos de logs
+docker-logs/
+*.log
