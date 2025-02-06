@@ -12,13 +12,17 @@ type PostgresDBRepo struct { // Estrutura que implementa a interface DatabaseRep
 }
 
 const dbTimeout = time.Second * 3 // Tempo limite para a execução de uma query
+
+func (m *PostgresDBRepo) Connection() *sql.DB { // Método que retorna a conexão com o banco de dados
+	return m.DB
+}
  
 func (m *PostgresDBRepo) AllMovies() ([]*models.Movie, error) { // Método que retorna todos os filmes
 
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout) // Cria um contexto com um tempo limite
 	defer cancel() // Adiciona uma função defer para cancelar o contexto
 
-	query := ` // Query para selecionar todos os filmes
+	query := ` 
 		SELECT 
 			id, title, release_date, runtime,
 			mpaa_rating, description, coalesce(image, ''),
@@ -27,7 +31,7 @@ func (m *PostgresDBRepo) AllMovies() ([]*models.Movie, error) { // Método que r
 			movies
 		ORDER BY 
 			title
-	`
+	` // Query para selecionar todos os filmes
 
 	rows, err := m.DB.QueryContext(ctx, query) // Executa a query no banco de dados
 	if err != nil {
