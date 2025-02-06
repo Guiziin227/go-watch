@@ -27,7 +27,6 @@ func main() {
 
 	//connect to the database
 
-
 	conn, err := app.connetToDB()
 	if err != nil {
 		log.Fatal(err)
