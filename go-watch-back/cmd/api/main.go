@@ -22,7 +22,7 @@ func main() {
 
 	//read the command line arguments
 
-	flag.StringVar(&app.DSN,"dsn", "host=localhost port=5432 user=postgres password=postgres dbname=movies sslmode=disable timezone=UTC connect_timout=5", "Postgres connection string")
+	flag.StringVar(&app.DSN,"dsn", "host=localhost port=5432 user=postgres password=postgres dbname=movies sslmode=disable timezone=UTC connect_timeout=5", "Postgres connection string")
 	flag.Parse()
 
 	//connect to the database
@@ -33,6 +33,7 @@ func main() {
 	}
 
 	app.DB = conn
+	defer app.DB.Close()
 
 	app.Domain = "example.com"
 
