@@ -16,11 +16,11 @@ const dbTimeout = time.Second * 3 // Tempo limite para a execução de uma query
 func (m *PostgresDBRepo) Connection() *sql.DB { // Método que retorna a conexão com o banco de dados
 	return m.DB
 }
- 
+
 func (m *PostgresDBRepo) AllMovies() ([]*models.Movie, error) { // Método que retorna todos os filmes
 
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout) // Cria um contexto com um tempo limite
-	defer cancel() // Adiciona uma função defer para cancelar o contexto
+	defer cancel()                                                      // Adiciona uma função defer para cancelar o contexto
 
 	query := ` 
 		SELECT 
@@ -40,9 +40,9 @@ func (m *PostgresDBRepo) AllMovies() ([]*models.Movie, error) { // Método que r
 
 	var movies []*models.Movie // Slice de ponteiros para structs do tipo Movie para armazenar os filmes
 
-	for rows.Next() {  // Itera sobre as linhas retornadas pela query
+	for rows.Next() { // Itera sobre as linhas retornadas pela query
 		var movie models.Movie // Instância de Movie para armazenar os dados de um filme
-		err = rows.Scan( // Lê os valores das colunas da linha atual e armazena nas propriedades da struct Movie
+		err = rows.Scan(       // Lê os valores das colunas da linha atual e armazena nas propriedades da struct Movie
 			&movie.ID,
 			&movie.Title,
 			&movie.ReleaseDate,
@@ -62,4 +62,37 @@ func (m *PostgresDBRepo) AllMovies() ([]*models.Movie, error) { // Método que r
 
 	return movies, nil // Retorna o slice de filmes e nenhum erro
 
+}
+
+func (m *PostgresDBRepo) GetUserByEmail(email string) (*models.User, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
+	defer cancel()
+
+	query := `
+	SELECT
+		id, email, first_name, last_name, password,
+		crated_at, updated_at 
+	FROM 
+	    users
+	WHERE 
+	    email = $1
+	`
+
+	var user models.User
+	row := m.DB.QueryRowContext(ctx, query, email)
+
+	err := row.Scan(
+		&user.ID,
+		&user.Email,
+		&user.FirstName,
+		&user.LastName,
+		&user.Password,
+		&user.CreatedAt,
+		&user.UpdatedAt,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
 }
