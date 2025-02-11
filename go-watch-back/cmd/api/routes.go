@@ -16,8 +16,9 @@ func (app *application) routes() http.Handler {
 	mux.Use(middleware.Recoverer)
 	mux.Use(app.enableCORS) // Adiciona o middleware de CORS.
 
-	mux.Get("/", app.Home) // Define um manipulador para a rota raiz.
-	mux.Get("/authenticate", app.authenticate)
+	mux.Post("/authenticate", app.authenticate)
+
+	mux.Get("/", app.Home)            // Define um manipulador para a rota raiz.
 	mux.Get("/movies", app.AllMovies) // Define um manipulador para a rota /movies.
 
 	// Retorna o roteador configurado, que irá gerenciar as rotas da aplicação.
