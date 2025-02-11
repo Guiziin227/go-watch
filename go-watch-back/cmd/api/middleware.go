@@ -1,17 +1,28 @@
 package main
 
-import "net/http"
+import (
+	"net/http"
+)
 
-func (app *application) enableCORS(h http.Handler) http.Handler { //Função enableCORS que recebe um Handler e retorna um Handler
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { //Função anônima que recebe um ResponseWriter e um Request
-		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173") //Portanto qualquer origem pode acessar a API
-		if r.Method == "OPTIONS" { //Se o método da requisição for OPTIONS
-			w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT,PATCH, DELETE") //Define os métodos permitidos
-			w.Header().Set("Access-Control-Allow-Credentials", "true") //Permite credenciais
-			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept, X-CSRF-Token") //Define os cabeçalhos permitidos
+func (app *application) enableCORS(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Definindo os cabeçalhos para permitir CORS
+		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173") // Frontend
+		w.Header().Set("Access-Control-Allow-Credentials", "true")             // Permite enviar cookies / credenciais
+
+		// Especificando os métodos permitidos
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS")
+
+		// Definindo os cabeçalhos permitidos para a requisição
+		w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, X-CSRF-Token, Authorization")
+
+		// Se for uma requisição OPTIONS (preflight), apenas retorna o cabeçalho e 200 OK
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
 			return
-		} else { //Se o método da requisição não for OPTIONS
-			h.ServeHTTP(w, r) //Chama o método ServeHTTP do Handler passando o ResponseWriter e o Request
 		}
+
+		// Caso contrário, chama o próximo handler
+		h.ServeHTTP(w, r)
 	})
 }
