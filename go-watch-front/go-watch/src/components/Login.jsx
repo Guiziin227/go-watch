@@ -12,20 +12,53 @@ export default function Login() {
 
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('email/pass', email, password)
 
-    if (email === 'admin@gmail.com') {
-      setJwtToken('abc')
-      setAlertClassName('d-none')
-      setAlertMessage('')
-      navigate('/')
-    } else {
-      setAlertClassName('alert-danger')
-      setAlertMessage('Invalid email or password')
+    let payload = {
+      email: email,
+      password: password,
+    }
+
+    console.log("Payload enviado:", payload)  // Verifique se os dados estão corretos.
+
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(payload),
+    }
+
+    try {
+      const response = await fetch('/authenticate', requestOptions)
+
+      console.log("Resposta do servidor:", response)  // Para verificar o status da resposta.
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const data = await response.json()
+
+      if (data.error) {
+        setAlertClassName("alert-danger")
+        setAlertMessage(data.message)
+        console.log("Erro de autenticação:", data.message)
+      } else {
+        setJwtToken(data.access_token)
+        setAlertClassName("d-none")
+        setAlertMessage("")
+        navigate('/')
+      }
+    } catch (err) {
+      setAlertClassName("alert-danger")
+      setAlertMessage(err.message || "An unexpected error occurred")
+      console.log("Erro no envio da requisição:", err)
     }
   }
+
 
   return (
     <div className="col-md-6 offset-md-3">
