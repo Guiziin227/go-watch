@@ -32,7 +32,7 @@ func (app *application) AllMovies(w http.ResponseWriter, r *http.Request) {
 
 func (app *application) authenticate(w http.ResponseWriter, r *http.Request) {
 	//read json payload
-	var requestPayload = struct {
+	var requestPayload struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`
 	}
@@ -49,13 +49,19 @@ func (app *application) authenticate(w http.ResponseWriter, r *http.Request) {
 		app.errorJSON(w, errors.New("invalid credentials"), http.StatusBadRequest)
 	}
 
-
-
-
 	//check password
 
+	valid, err := user.PasswordMatches(requestPayload.Password)
+	if err != nil || !valid {
+		app.errorJSON(w, errors.New("invalid credentials"), http.StatusBadRequest)
+	}
+
 	//create a jwt user
-	u := jwtUser{ID: 1, FirstName: "John", LastName: "Doe"}
+	u := jwtUser{
+		ID:        user.ID,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+	}
 
 	//generate tokens
 	tokens, err := app.auth.GenerateTokenPair(&u)
@@ -67,5 +73,6 @@ func (app *application) authenticate(w http.ResponseWriter, r *http.Request) {
 	log.Println(tokens.Token)
 	refreshToken := app.auth.GetRefreshCookie(tokens.RefreshToken)
 	http.SetCookie(w, refreshToken)
-	w.Write([]byte(tokens.Token))
+
+	app.writeJSON(w, http.StatusAccepted, tokens)
 }
