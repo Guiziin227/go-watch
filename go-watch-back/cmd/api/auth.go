@@ -100,11 +100,11 @@ func (j *Auth) GetExpiredRefreshCookie() *http.Cookie {
 		Name:     j.CookieName,
 		Path:     j.CookiePath,
 		Value:    "",
-		Expires:  time.Unix(0, 0),
+		Expires:  time.Unix(0, 0), // Expira imediatamente
 		MaxAge:   -1,
-		SameSite: http.SameSiteStrictMode,
-		Domain:   j.CookieDomain,
+		SameSite: http.SameSiteLaxMode, // Mais permissivo para remoção
+		Domain:   j.CookieDomain,       // Deve ser o mesmo do cookie criado
 		HttpOnly: true,
-		Secure:   true,
+		Secure:   false, // Altere para false no localhost
 	}
 }

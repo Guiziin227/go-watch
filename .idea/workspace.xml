@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="12b0df6d-eae7-4495-a12d-861a530503eb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/go-watch-back/cmd/api/auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/go-watch-back/cmd/api/auth.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-back/cmd/api/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/go-watch-back/cmd/api/db.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-back/cmd/api/handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/go-watch-back/cmd/api/handlers.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-back/cmd/api/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/go-watch-back/cmd/api/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-back/cmd/api/middleware.go" beforeDir="false" afterPath="$PROJECT_DIR$/go-watch-back/cmd/api/middleware.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-back/cmd/api/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/go-watch-back/cmd/api/routes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-back/postgres-data/base/13757/pg_internal.init" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-back/postgres-data/base/16384/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/go-watch-back/postgres-data/base/16384/pg_internal.init" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-back/postgres-data/global/pg_control" beforeDir="false" afterPath="$PROJECT_DIR$/go-watch-back/postgres-data/global/pg_control" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-back/postgres-data/global/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/go-watch-back/postgres-data/global/pg_internal.init" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-back/postgres-data/pg_stat/db_0.stat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-back/postgres-data/pg_stat/db_13757.stat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-back/postgres-data/pg_stat/db_16384.stat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-back/postgres-data/pg_stat/global.stat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-back/postgres-data/pg_wal/000000010000000000000001" beforeDir="false" afterPath="$PROJECT_DIR$/go-watch-back/postgres-data/pg_wal/000000010000000000000001" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-front/go-watch/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/go-watch-front/go-watch/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-front/go-watch/src/components/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/go-watch-front/go-watch/src/components/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-front/go-watch/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/go-watch-front/go-watch/src/main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go-watch-front/go-watch/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/go-watch-front/go-watch/vite.config.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go Application" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../../../Program Files/Go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2srI8xAtQbToBPze8WPjOf0xBXq" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="openDirectoriesWithSingleClick" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go Application&quot;,
+    &quot;RunOnceActivity.ChatTagsLlmMigration&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.CodyAccountHistoryMigration&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.CodyAccountsIdsRefresh&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.CodyAssignOrphanedChatsToActiveAccount&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.CodyConvertUrlToCodebaseName&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.CodyHistoryLlmMigration&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.CodyMigrateChatHistory-v2&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.CodyProjectSettingsMigration&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.DeprecatedChatLlmMigration&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ToggleCodyToolWindowAfterMigration&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.automatic.dependencies.download&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/PC-Gamer/Desktop/Programacao/GOLANG/go-curso/go-watch-back/cmd/api&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\GoLand 2024.1.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\PC-Gamer\Desktop\Programacao\GOLANG\go-curso\go-watch-back\cmd\api" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-gosdk-33c477a475b1-e0158606a674-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-241.17011.92" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-GO-241.17011.92" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+</project>

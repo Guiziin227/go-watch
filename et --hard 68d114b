@@ -1,0 +1,63 @@
+[33md9d8ddb[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{0}: reset: moving to HEAD~2
+[33m978ac0b[m HEAD@{1}: commit: cookie token
+[33m68d114b[m HEAD@{2}: reset: moving to HEAD~1
+[33m0d0e4e3[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{3}: commit: generate refresh token cookie
+[33m68d114b[m HEAD@{4}: commit: feat: create a handler authenticate
+[33md9d8ddb[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{5}: commit: feat: setting default values
+[33m9237c2c[m HEAD@{6}: commit: feat: generating tokens
+[33m082c114[m HEAD@{7}: commit: feat: create structs for Auth
+[33mdb3704b[m HEAD@{8}: commit: adicionando os helpers
+[33me2d0499[m HEAD@{9}: commit: feat: create helpers
+[33m1455d37[m HEAD@{10}: commit: feat: refatorando
+[33m9c7faa5[m HEAD@{11}: commit: feat: create utils
+[33m4c92c59[m HEAD@{12}: commit: feat: repos, connect bd-api-front
+[33mb4e5690[m HEAD@{13}: commit: feat: create repository interface
+[33m31ccfa6[m HEAD@{14}: commit: feat: db close
+[33m1bed772[m HEAD@{15}: commit: fix
+[33m13826dd[m HEAD@{16}: commit: feat: connecting db and api
+[33ma710c9c[m HEAD@{17}: commit: flags
+[33mefacaf8[m HEAD@{18}: commit: Removendo docker-compose.yml do versionamento
+[33m5da143a[m HEAD@{19}: commit: fix
+[33maab2679[m HEAD@{20}: commit: Removendo docker-compose.yml do versionamento
+[33m7382acb[m HEAD@{21}: commit: Removendo node_modules do versionamento
+[33mbea177c[m HEAD@{22}: commit: fix
+[33m1fa6fcc[m HEAD@{23}: commit: fix
+[33m65bfda3[m HEAD@{24}: commit: feat: add sql and docker-compose
+[33mff444ef[m HEAD@{25}: commit: feat: proxy
+[33m2ab392e[m HEAD@{26}: commit: fix
+[33ma738e37[m HEAD@{27}: commit: feat: middleware
+[33macab42f[m HEAD@{28}: commit: feat: melhorando a logica
+[33m7c6b20c[m HEAD@{29}: commit: feat: connecting to backend
+[33m43d0344[m HEAD@{30}: commit: feat: criando rota movie
+[33m22fb57f[m HEAD@{31}: commit: feat: add struct movie
+[33m8a379a4[m HEAD@{32}: commit: feat: add fake api for test
+[33mc5a0409[m HEAD@{33}: commit: fix
+[33m9233160[m HEAD@{34}: commit: feat: add chi and mux
+[33mff412cc[m HEAD@{35}: commit: feat: hello world in web
+[33m8dd6571[m HEAD@{36}: commit: feat: create backend base
+[33m9f4a4b1[m HEAD@{37}: commit: feat: logout
+[33ma7487d3[m HEAD@{38}: commit: fix
+[33m2df9260[m HEAD@{39}: commit: feat: alert messages
+[33m90430d9[m HEAD@{40}: commit: feat: create alert
+[33m05c574c[m HEAD@{41}: commit: feat: basic login logic
+[33m6cdc94e[m HEAD@{42}: commit: feat: login page
+[33m64f0102[m HEAD@{43}: commit: feat: input
+[33ma8e512c[m HEAD@{44}: commit: feat: logic login/logout
+[33m2ff483a[m HEAD@{45}: commit: feat: addfuncionality
+[33m41078f7[m HEAD@{46}: commit: feat: add movie page route
+[33m1bf1900[m HEAD@{47}: commit: fix
+[33m5985b6b[m HEAD@{48}: commit: feat: crate the visible table of movies
+[33mad7b058[m HEAD@{49}: commit: feat: create fake API
+[33m3f2fe9a[m HEAD@{50}: commit: fix
+[33m568a477[m HEAD@{51}: commit: login
+[33m1efd0c2[m HEAD@{52}: commit: feat: routes
+[33me271aa4[m HEAD@{53}: commit: feat: more routes and new components
+[33m9546d60[m HEAD@{54}: commit: Arrumando rotas
+[33m856593c[m HEAD@{55}: commit: feat: add errorElement
+[33mf601dbd[m HEAD@{56}: commit: Error page
+[33m29ced57[m HEAD@{57}: commit: feat: router
+[33m7441385[m HEAD@{58}: commit: feat:add react router
+[33m724f7a9[m HEAD@{59}: commit: Basic layout
+[33mc3d0243[m HEAD@{60}: commit: feat: add boots
+[33m209424f[m HEAD@{61}: Branch: renamed refs/heads/master to refs/heads/main
+[33m209424f[m HEAD@{63}: commit (initial): Init

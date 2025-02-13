@@ -39,7 +39,7 @@ func main() {
 
 	//connect to the database
 
-	conn, err := app.connetToDB()
+	conn, err := app.connectToDB()
 	if err != nil {
 		log.Fatal(err)
 	}
