@@ -10,6 +10,7 @@ export default defineConfig({
       "/logout": "http://localhost:8080",
       "/login": "http://localhost:8080",
       "/refresh": "http://localhost:8080",
+      "/admin/movies": "http://localhost:8080",
     },
   },
 })
