@@ -142,3 +142,7 @@ func (app *application) logoutHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(`{"message": "Logout realizado com sucesso"}`))
 }
+
+func (app *application) MovieCatalog(w http.ResponseWriter, r *http.Request) {
+	
+}
