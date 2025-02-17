@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export function TextArea(props) {
-    const { name, title, value, onChange, errorDiv, errorMsg } = props;
+    const { name, title, value, onChange, errorDiv, errorMsg,rows } = props;
 
     return (
         <div className="mb-3">
@@ -13,8 +13,7 @@ export function TextArea(props) {
                 className="form-control"
                 id={name}
                 name={name}
-                cols="30"
-                rows="10"
+                rows={rows}
                 value={value}
                 onChange={onChange}
             />

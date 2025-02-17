@@ -1,6 +1,8 @@
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Input from "./form/Input.jsx";
+import {Select} from "./form/Select.jsx";
+import {TextArea} from "./form/TextArea.jsx";
 
 export default function EditMovie() {
     const { jwtToken } = useOutletContext();
@@ -8,6 +10,15 @@ export default function EditMovie() {
 
     const [error, setError] = useState(null);
     const [errors, setErrors] = useState([]);
+
+    const mpaaOptions = [
+        {id: "G", value: "G"},
+        {id: "PG", value: "PG"},
+        {id: "PG13", value: "PG13"},
+        {id: "R", value: "R"},
+        {id: "NC17", value: "NC17"},
+        {id: "18A", value: "18A"},
+    ]
 
     const hasError = (key) => {
         return errors.indexOf(key) !== -1;
@@ -54,14 +65,47 @@ export default function EditMovie() {
                     <input type="hidden" name="id" value={movie.id} id="id" />
 
                     <Input
-                        name="title"
-                        title="Title"
-                        type="text"
+                        name={"title"}
+                        title={"Title"}
+                        type={"text"}
                         onChange={handleChange}
                         value={movie.title}
-                        className="form-control"
+                        className={"form-control"}
                         errorDiv={hasError("title") ? "text-danger" : "d-none"}
-                        errorMsg="Please enter a title"
+                        errorMsg={"Please enter a title"}
+                    />
+
+                    <Input
+                        name={"release_date"}
+                        title={"Release Date"}
+                        type={"date"}
+                        onChange={handleChange}
+                        value={movie.release_date}
+                        className="form-control"
+                        errorDiv={hasError("release_date") ? "text-danger" : "d-none"}
+                        errorMsg="Please enter a release date"
+                    />
+
+                    <Input
+                        name={"runtime"}
+                        title={"Runtime"}
+                        type={"text"}
+                        onChange={handleChange}
+                        value={movie.runtime}
+                        className={"form-control"}
+                        errorDiv={hasError("runtime") ? "text-danger" : "d-none"}
+                        errorMsg={"Please enter a runtime"}
+                    />
+
+                    <Select onChange={handleChange} name={"mpaa_rating"} options={mpaaOptions} title={"MPAA Rating"}
+                            placeHolder={"Choose..."} errorMsg={"Plase choose"}
+                            errorDiv={hasError("mpaa_rating") ? "text-danger" : "d-none"}
+                    />
+
+                    <TextArea onChange={handleChange} name={"description"} title={"Description"}
+                              value={movie.description} errorMsg={"Please enter a description"}
+                              rows={"3"}
+                              errorDiv={hasError("description") ? "text-danger" : "d-none"}
                     />
                 </form>
             </div>
