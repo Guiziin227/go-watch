@@ -125,7 +125,7 @@ func (m *PostgresDBRepo) OneMovie(id int64) (*models.Movie, error) {
 
 }
 
-func (m *PostgresDBRepo) OneMovieForEdit(id int64) (*models.Movie, error) {
+func (m *PostgresDBRepo) OneMovieForEdit(id int64) (*models.Movie, []*models.Genre, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), dbTimeout)
 	defer cancel()
 
@@ -149,7 +149,7 @@ func (m *PostgresDBRepo) OneMovieForEdit(id int64) (*models.Movie, error) {
 	)
 
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	//get genres, if any
@@ -160,7 +160,7 @@ func (m *PostgresDBRepo) OneMovieForEdit(id int64) (*models.Movie, error) {
 
 	rows, err := m.DB.QueryContext(ctx, query, id)
 	if err != nil && err != sql.ErrNoRows {
-		return nil, err
+		return nil, nil, err
 	}
 
 	defer rows.Close()
@@ -175,7 +175,7 @@ func (m *PostgresDBRepo) OneMovieForEdit(id int64) (*models.Movie, error) {
 			&g.Genre,
 		)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 
 		genres = append(genres, &g)
@@ -185,7 +185,29 @@ func (m *PostgresDBRepo) OneMovieForEdit(id int64) (*models.Movie, error) {
 	movie.Genres = genres
 	movie.GenresArray = genresArray
 
-	return &movie, err
+	var allGenres []*models.Genre
+
+	query = `select id, genre, from genres order by genre`
+	gRows, err := m.DB.QueryContext(ctx, query, id)
+	if err != nil && err != sql.ErrNoRows {
+		return nil, nil, err
+	}
+
+	defer gRows.Close()
+
+	for gRows.Next() {
+		var g models.Genre
+		err = gRows.Scan(
+			&g.ID,
+			&g.Genre)
+
+		if err != nil {
+			return nil, nil, err
+		}
+		allGenres = append(allGenres, &g)
+	}
+
+	return &movie, allGenres, err
 
 }
 
