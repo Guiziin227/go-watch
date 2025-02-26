@@ -107,6 +107,7 @@ export default function EditMovie() {
                               rows={"3"}
                               errorDiv={hasError("description") ? "text-danger" : "d-none"}
                     />
+
                 </form>
             </div>
         </>
