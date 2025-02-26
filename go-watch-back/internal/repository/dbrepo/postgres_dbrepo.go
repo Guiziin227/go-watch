@@ -83,6 +83,7 @@ func (m *PostgresDBRepo) OneMovie(id int64) (*models.Movie, error) {
 		&movie.Runtime,
 		&movie.MPAARating,
 		&movie.Description,
+		&movie.Image,
 		&movie.CreatedAt,
 		&movie.UpdatedAt,
 	)
@@ -95,7 +96,7 @@ func (m *PostgresDBRepo) OneMovie(id int64) (*models.Movie, error) {
 	query = `select g.id, g.genre from movies_genres mg 
     left join genres g on (mg.genre_id = g.id)
 	where mg.movie_id = $1 
-	order by.genre`
+	order by g.genre`
 
 	rows, err := m.DB.QueryContext(ctx, query, id)
 	if err != nil && err != sql.ErrNoRows {
