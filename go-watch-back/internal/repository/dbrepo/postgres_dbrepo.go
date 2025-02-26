@@ -94,7 +94,7 @@ func (m *PostgresDBRepo) OneMovie(id int64) (*models.Movie, error) {
 	//get genres, if any
 	query = `select g.id, g.genre from movies_genres mg 
     left join genres g on (mg.genre_id = g.id)
-	where mg.movie_id $1 
+	where mg.movie_id = $1 
 	order by.genre`
 
 	rows, err := m.DB.QueryContext(ctx, query, id)
@@ -155,7 +155,7 @@ func (m *PostgresDBRepo) OneMovieForEdit(id int64) (*models.Movie, []*models.Gen
 	//get genres, if any
 	query = `select g.id, g.genre from movies_genres mg 
     left join genres g on (mg.genre_id = g.id)
-	where mg.movie_id $1 
+	where mg.movie_id = $1 
 	order by.genre`
 
 	rows, err := m.DB.QueryContext(ctx, query, id)
