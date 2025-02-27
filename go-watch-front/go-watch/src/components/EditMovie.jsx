@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Input from "./form/Input.jsx";
 import {Select} from "./form/Select.jsx";
 import {TextArea} from "./form/TextArea.jsx";
+import {Checkbox} from "./form/Checkbox.jsx";
 
 export default function EditMovie() {
     const { jwtToken } = useOutletContext();
@@ -31,16 +32,72 @@ export default function EditMovie() {
         runtime: "",
         mpaa_rating: "",
         description: "",
+        genres: [],
+        genres_array: [Array(13).fill(false)]
     });
 
     let { id } = useParams();
+
+    if(id === undefined){
+        id = 0;
+    }
 
     useEffect(() => {
         if (jwtToken === "") {
             navigate("/login");
             return;
         }
-    }, [jwtToken, navigate]);
+
+        if (id === 0){
+            // add movie
+            setMovie({
+                id: 0,
+                title: "",
+                release_date: "",
+                runtime: "",
+                mpaa_rating: "",
+                description: "",
+                genres: [],
+                genres_array: [Array(13).fill(false)]
+            })
+
+            const headers = new Headers();
+            headers.append("Content-Type", "application/json");
+
+            const requestOptions = {
+                method: "GET",
+                headers: headers,
+            }
+
+            fetch("http://localhost:8080/genres", requestOptions)
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error("Network response was not ok.");
+                })
+                .then((data) => {
+                    const checks = [];
+
+                    data.forEach((genre) => {
+                        checks.push({id: genre.id, genre: genre.genre, checked: false});
+                    });
+
+                    setMovie((m) => ({
+                        ...m,
+                        genres: checks,
+                        genres_array: [],
+                    }));
+                })
+                .catch((error) => {
+                    setError(error);
+                });
+        } else {
+            // edit movie
+        }
+
+
+    }, [id,jwtToken, navigate]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -53,6 +110,12 @@ export default function EditMovie() {
             [name]: value,
         }));
     };
+
+    const handleCheck = (e, position) => {
+        console.log("handleCheck", e.target.checked, position);
+
+
+    }
 
     return (
         <>
@@ -107,6 +170,29 @@ export default function EditMovie() {
                               rows={"3"}
                               errorDiv={hasError("description") ? "text-danger" : "d-none"}
                     />
+
+                    <hr/>
+
+                    <h3>Genres</h3>
+
+                    {movie.genres && movie.genres.length > 1 &&
+                        <>
+                        {Array.from(movie.genres).map((g, index) => (
+
+                            <Checkbox
+                                name={"genre"}
+                                onChange={(e)=>handleCheck(e, index)}
+                                checked={movie.genres[index].checked}
+                                title={g.genre}
+                                key={index}
+                                id={"genre-" + index}
+                                value={g.id}
+                            />
+
+
+                        ))}
+                        </>
+                    }
 
                 </form>
             </div>
