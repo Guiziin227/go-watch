@@ -1,12 +1,12 @@
-import { useNavigate, useOutletContext, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {useNavigate, useOutletContext, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
 import Input from "./form/Input.jsx";
 import {Select} from "./form/Select.jsx";
 import {TextArea} from "./form/TextArea.jsx";
 import {Checkbox} from "./form/Checkbox.jsx";
 
 export default function EditMovie() {
-    const { jwtToken } = useOutletContext();
+    const {jwtToken} = useOutletContext();
     const navigate = useNavigate();
 
     const [error, setError] = useState(null);
@@ -36,9 +36,9 @@ export default function EditMovie() {
         genres_array: [Array(13).fill(false)]
     });
 
-    let { id } = useParams();
+    let {id} = useParams();
 
-    if(id === undefined){
+    if (id === undefined) {
         id = 0;
     }
 
@@ -48,7 +48,7 @@ export default function EditMovie() {
             return;
         }
 
-        if (id === 0){
+        if (id === 0) {
             // add movie
             setMovie({
                 id: 0,
@@ -97,14 +97,14 @@ export default function EditMovie() {
         }
 
 
-    }, [id,jwtToken, navigate]);
+    }, [id, jwtToken, navigate]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setMovie((prevMovie) => ({
             ...prevMovie,
             [name]: value,
@@ -114,18 +114,31 @@ export default function EditMovie() {
     const handleCheck = (e, position) => {
         console.log("handleCheck", e.target.checked, position);
 
+        let tmpArr = movie.genres
+        tmpArr[position].checked = !tmpArr[position].checked
 
+        let tmpIDs = movie.genres_array
+        if (!e.target.checked){
+            tmpIDs.splice(tmpIDs.indexOf(e.target.value))
+        }else{
+            tmpIDs.push(parseInt(e.target.value,10))
+        }
+
+        setMovie({
+            ...movie,
+            genres_array: tmpIDs,
+        })
     }
 
     return (
         <>
             <div>
                 <h2>{id == 0 ? "Add/Edit Movie!" : "Add/Edit Movies!"}</h2>
-                <hr />
+                <hr/>
                 <pre>{JSON.stringify(movie, null, 3)}</pre>
 
                 <form onSubmit={handleSubmit}>
-                    <input type="hidden" name="id" value={movie.id} id="id" />
+                    <input type="hidden" name="id" value={movie.id} id="id"/>
 
                     <Input
                         name={"title"}
@@ -177,20 +190,20 @@ export default function EditMovie() {
 
                     {movie.genres && movie.genres.length > 1 &&
                         <>
-                        {Array.from(movie.genres).map((g, index) => (
+                            {Array.from(movie.genres).map((g, index) => (
 
-                            <Checkbox
-                                name={"genre"}
-                                onChange={(e)=>handleCheck(e, index)}
-                                checked={movie.genres[index].checked}
-                                title={g.genre}
-                                key={index}
-                                id={"genre-" + index}
-                                value={g.id}
-                            />
+                                <Checkbox
+                                    name={"genre"}
+                                    onChange={(e) => handleCheck(e, index)}
+                                    checked={movie.genres[index].checked}
+                                    title={g.genre}
+                                    key={index}
+                                    id={"genre-" + index}
+                                    value={g.id}
+                                />
 
 
-                        ))}
+                            ))}
                         </>
                     }
 
