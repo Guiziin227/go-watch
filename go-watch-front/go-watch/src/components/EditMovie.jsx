@@ -4,6 +4,7 @@ import Input from "./form/Input.jsx";
 import {Select} from "./form/Select.jsx";
 import {TextArea} from "./form/TextArea.jsx";
 import {Checkbox} from "./form/Checkbox.jsx";
+import Swal from "sweetalert2";
 
 export default function EditMovie() {
     const {jwtToken} = useOutletContext();
@@ -101,6 +102,39 @@ export default function EditMovie() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        let errors = []
+        let required = [
+            {field: movie.title, name: "title"},
+            {field: movie.release_date, name: "release_date"},
+            {field: movie.runtime, name: "runtime"},
+            {field: movie.description, name: "description"},
+            {field: movie.mpaa_rating, name: "mpaa_rating"},
+        ]
+
+        required.forEach(function (obj){
+            if (!obj.field){
+                errors.push(obj.name)
+            }
+        })
+
+        if (movie.genres_array.length === 0){
+            Swal.fire({
+                title: "Error!",
+                text: "Please select at least one genre",
+                icon: "error",
+                confirmButtonText: "OK",
+            })
+            errors.push("genres")
+        }
+
+        setErrors(errors)
+
+        console.log("errors", errors)
+
+        if (errors.length > 0){
+            return false
+        }
     };
 
     const handleChange = (e) => {
@@ -135,7 +169,7 @@ export default function EditMovie() {
             <div>
                 <h2>{id == 0 ? "Add/Edit Movie!" : "Add/Edit Movies!"}</h2>
                 <hr/>
-                <pre>{JSON.stringify(movie, null, 3)}</pre>
+                {/*<pre>{JSON.stringify(movie, null, 3)}</pre>*/} {/* Para testes */}
 
                 <form onSubmit={handleSubmit}>
                     <input type="hidden" name="id" value={movie.id} id="id"/>
@@ -206,6 +240,9 @@ export default function EditMovie() {
                             ))}
                         </>
                     }
+
+                    <hr/>
+                    <button className="btn btn-primary">Save</button>
 
                 </form>
             </div>
