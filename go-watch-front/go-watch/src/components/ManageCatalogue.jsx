@@ -31,7 +31,7 @@ export default function ManageCatalogue() {
             try {
                 // Aguarda a resposta da requisição
                 const response = await fetch(
-                    '/admin/movies',
+                    'http://localhost:8080/admin/movies',
                     requestOptions
                 )
                 // Converte a resposta para JSON
