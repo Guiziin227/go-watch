@@ -2,10 +2,14 @@ package main
 
 import (
 	"backend/internal/models"
+	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/go-chi/chi/v5"
+	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"strconv"
 
 	"github.com/golang-jwt/jwt/v4"
@@ -212,11 +216,10 @@ func (app *application) AllGenres(w http.ResponseWriter, r *http.Request) {
 func (app *application) InsertMovie(w http.ResponseWriter, r *http.Request) {
 	var movie models.Movie
 
-	err := app.readJSON(w, r, &movie){
-		if err != nil {
-			app.errorJSON(w, err, http.StatusBadRequest)
-			return
-		}
+	err := app.readJSON(w, r, &movie)
+	if err != nil {
+		app.errorJSON(w, err, http.StatusBadRequest)
+		return
 	}
 
 	//try to get an image
@@ -224,9 +227,56 @@ func (app *application) InsertMovie(w http.ResponseWriter, r *http.Request) {
 	//now handle the genres
 
 	resp := JSONResponse{
-		Error: false,
+		Error:   false,
 		Message: "Movie inserted",
 	}
 
 	app.writeJSON(w, http.StatusAccepted, resp)
+}
+
+func (app *application) getPoster(movie models.Movie) models.Movie {
+
+	type TheMovieDB struct {
+		Page    int `json:"page"`
+		Results []struct {
+			PosterPath string `json:"poster_path"`
+		} `json:"results"`
+		TotalPages int `json:"total_pages"`
+	}
+
+	client := &http.Client{}
+	theUrl := fmt.Sprintf("https://api.themoviedb.org/3/search/movie?api_key=%s&query=%s", app.APIKey, url.QueryEscape(movie.Title))
+
+	req, error := http.NewRequest("GET", theUrl, nil)
+	if error != nil {
+		log.Println("Error getting poster: ", error)
+		return movie
+	}
+
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Content-Type", "application/json")
+
+	resp, error := client.Do(req)
+	if error != nil {
+		log.Println("Error getting poster: ", error)
+		return movie
+	}
+
+	defer resp.Body.Close()
+
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Println("Error reading poster response: ", err)
+		return movie
+	}
+	var responseObject TheMovieDB
+
+	json.Unmarshal(bodyBytes, &responseObject)
+
+	if len(responseObject.Results) > 0 {
+		movie.Image = responseObject.Results[0].PosterPath
+	}
+
+	return movie
+
 }
