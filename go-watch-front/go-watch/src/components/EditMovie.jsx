@@ -135,6 +135,52 @@ export default function EditMovie() {
         if (errors.length > 0){
             return false
         }
+
+        // pass validation
+
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", "Bearer " + jwtToken);
+
+        //assumindo que ja tem o id do filme
+        let method = "PUT";
+
+        if (movie.id > 0){
+            method = "PATCH";
+        }
+
+        const requestBody = movie
+        //convert
+
+        requestBody.release_date = new Date(requestBody.release_date);
+        requestBody.runtime = parseInt(requestBody.runtime, 10);
+
+        let requestOptions = {
+            method: method,
+            headers: headers,
+            body: JSON.stringify(requestBody),
+            credentials: "include",
+        }
+
+       fetch(`/admin/movies/${id}`, requestOptions)
+           .then((response) => response.json())
+           .then((data) => {
+               if (data.error){
+                   Swal.fire({
+                       title: "Error!",
+                       text: "Você não tem permissão",
+                       icon: "error",
+                       confirmButtonText: "OK",
+                   })
+               }else {
+                   navigate("/manage-catalogue");
+               }
+           })
+           .catch((error) => {
+                setError(error);
+           })
+
+
     };
 
     const handleChange = (e) => {
