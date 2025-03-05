@@ -345,4 +345,6 @@ func (m *PostgresDBRepo) UpdateMovieGenres(id int, genresIDs []int) error {
 			return err
 		}
 	}
+
+	return nil
 }
