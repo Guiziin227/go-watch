@@ -240,6 +240,40 @@ const EditMovie = () => {
         })
     }
 
+    const confirmDelete = () => {
+        Swal.fire({
+            title: 'Você tem certeza?',
+            text: 'Você não poderá reverter isso!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sim, delete!',
+            cancelButtonText: 'Não, cancelar!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let headers = new Headers();
+                headers.append("Authorization", "Bearer " + jwtToken);
+
+                const requestOptions = {
+                    method: "DELETE",
+                    headers: headers,
+                }
+                fetch(`/admin/movies/${movie.id}`, requestOptions)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.error) {
+                            console.log(data.error);
+                        } else {
+                            navigate("/manage-catalogue");
+                        }
+                    }
+                )
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+        })
+    }
+
     if (error != null) {
         return <div>An error occurred: {error}</div>
 
@@ -331,9 +365,14 @@ const EditMovie = () => {
                     }
 
                     <hr/>
-
                     <button className="btn btn-primary">Save</button>
 
+                    {movie.id > 0 &&
+                        <a href="#!"
+                           className="btn btn-danger ms-2"
+                           onClick={confirmDelete}
+                        >Delete Movie</a>
+                    }
 
                 </form>
             </div>
