@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/go-chi/chi/v5"
 	"io"
 	"log"
 	"net/http"
@@ -13,6 +12,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/golang-jwt/jwt/v4"
 )
 
@@ -136,19 +136,8 @@ func (app *application) refreshToken(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) logoutHandler(w http.ResponseWriter, r *http.Request) {
-	expiredCookie := app.auth.GetExpiredRefreshCookie()
-
-	// Define o cookie expirado
-	http.SetCookie(w, expiredCookie)
-
-	// Impede cache da resposta
-	w.Header().Set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate")
-	w.Header().Set("Expires", "0")
-	w.Header().Set("Pragma", "no-cache")
-
-	// Força uma nova resposta ao invés de 304
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"message": "Logout realizado com sucesso"}`))
+	http.SetCookie(w, app.auth.GetExpiredRefreshCookie())
+	w.WriteHeader(http.StatusAccepted)
 }
 
 func (app *application) MovieCatalog(w http.ResponseWriter, r *http.Request) {
@@ -163,16 +152,15 @@ func (app *application) MovieCatalog(w http.ResponseWriter, r *http.Request) {
 
 func (app *application) GetMovie(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
-	movieID, err := strconv.Atoi(id) // convert string to int
+	movieID, err := strconv.Atoi(id)
 	if err != nil {
-		app.errorJSON(w, errors.New("invalid movie id"), http.StatusBadRequest)
-		return // return para não executar o código abaixo
+		app.errorJSON(w, err)
+		return
 	}
 
 	movie, err := app.DB.OneMovie(int64(movieID))
 	if err != nil {
-		log.Println("Error fetching movie:", err) // Log the error for debugging
-		app.errorJSON(w, errors.New("invalid movie id"), http.StatusBadRequest)
+		app.errorJSON(w, err)
 		return
 	}
 
@@ -181,27 +169,27 @@ func (app *application) GetMovie(w http.ResponseWriter, r *http.Request) {
 
 func (app *application) MovieForEdit(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
-	movieID, err := strconv.Atoi(id) // convert string to int
+	movieID, err := strconv.Atoi(id)
 	if err != nil {
-		app.errorJSON(w, errors.New("invalid movie id"), http.StatusBadRequest)
-		return // return para não executar o código abaixo
+		app.errorJSON(w, err)
+		return
 	}
 
 	movie, genres, err := app.DB.OneMovieForEdit(int64(movieID))
 	if err != nil {
-		app.errorJSON(w, errors.New("invalid movie id"), http.StatusBadRequest)
-		return // return para não executar o código abaixo
+		app.errorJSON(w, err)
+		return
 	}
 
 	var payload = struct {
 		Movie  *models.Movie   `json:"movie"`
 		Genres []*models.Genre `json:"genres"`
 	}{
-		movie, genres,
+		movie,
+		genres,
 	}
 
 	_ = app.writeJSON(w, http.StatusOK, payload)
-
 }
 
 func (app *application) AllGenres(w http.ResponseWriter, r *http.Request) {
@@ -219,12 +207,11 @@ func (app *application) InsertMovie(w http.ResponseWriter, r *http.Request) {
 
 	err := app.readJSON(w, r, &movie)
 	if err != nil {
-		app.errorJSON(w, err, http.StatusBadRequest)
+		app.errorJSON(w, err)
 		return
 	}
 
-	//try to get an image
-
+	// try to get an image
 	movie = app.getPoster(movie)
 
 	movie.CreatedAt = time.Now()
@@ -232,26 +219,26 @@ func (app *application) InsertMovie(w http.ResponseWriter, r *http.Request) {
 
 	newID, err := app.DB.InsertMovie(movie)
 	if err != nil {
-		app.errorJSON(w, err, http.StatusBadRequest)
+		app.errorJSON(w, err)
 		return
 	}
-	//now handle the genres
+
+	// now handle genres
 	err = app.DB.UpdateMovieGenres(newID, movie.GenresArray)
 	if err != nil {
-		app.errorJSON(w, err, http.StatusBadRequest)
+		app.errorJSON(w, err)
 		return
 	}
 
 	resp := JSONResponse{
 		Error:   false,
-		Message: "Movie inserted",
+		Message: "movie updated",
 	}
 
 	app.writeJSON(w, http.StatusAccepted, resp)
 }
 
 func (app *application) getPoster(movie models.Movie) models.Movie {
-
 	type TheMovieDB struct {
 		Page    int `json:"page"`
 		Results []struct {
@@ -261,30 +248,32 @@ func (app *application) getPoster(movie models.Movie) models.Movie {
 	}
 
 	client := &http.Client{}
-	theUrl := fmt.Sprintf("https://api.themoviedb.org/3/search/movie?api_key=%s&query=%s", app.APIKey, url.QueryEscape(movie.Title))
+	theUrl := fmt.Sprintf("https://api.themoviedb.org/3/search/movie?api_key=%s", app.APIKey)
 
-	req, error := http.NewRequest("GET", theUrl, nil)
-	if error != nil {
-		log.Println("Error getting poster: ", error)
+	// https://api.themoviedb.org/3/search/movie?api_key=b41447e6319d1cd467306735632ba733&query=Die+Hard
+
+	req, err := http.NewRequest("GET", theUrl+"&query="+url.QueryEscape(movie.Title), nil)
+	if err != nil {
+		log.Println(err)
 		return movie
 	}
 
 	req.Header.Add("Accept", "application/json")
 	req.Header.Add("Content-Type", "application/json")
 
-	resp, error := client.Do(req)
-	if error != nil {
-		log.Println("Error getting poster: ", error)
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Println(err)
 		return movie
 	}
-
 	defer resp.Body.Close()
 
 	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Println("Error reading poster response: ", err)
+		log.Println(err)
 		return movie
 	}
+
 	var responseObject TheMovieDB
 
 	json.Unmarshal(bodyBytes, &responseObject)
@@ -294,5 +283,4 @@ func (app *application) getPoster(movie models.Movie) models.Movie {
 	}
 
 	return movie
-
 }
