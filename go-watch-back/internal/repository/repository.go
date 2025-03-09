@@ -7,7 +7,7 @@ import (
 
 type DatabaseRepo interface {
 	Connection() *sql.DB
-	AllMovies() ([]*models.Movie, error)
+	AllMovies(genres ...int) ([]*models.Movie, error)
 	OneMovie(id int64) (*models.Movie, error)
 	OneMovieForEdit(id int64) (*models.Movie, []*models.Genre, error)
 
