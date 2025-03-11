@@ -12,6 +12,35 @@ export default function Graphql() {
     //perform the search
     const performSearch = async () => {
 
+        const payload = `
+                {
+                    search(titleContains: "${searchTerm}") {
+                        id
+                        title
+                        runtime
+                        release_date
+                        mpaa_rating
+                    }
+                }
+            `
+
+        const headers = new Headers()
+        headers.append("Content-Type", "application/graphql")
+
+        const requestOptions = {
+            method: "POST",
+            headers: headers,
+            body: payload
+        }
+
+        fetch(`http://localhost:8080/graph`, requestOptions)
+            .then(response => response.json())
+            .then(response => {
+                let theList = Object.values(response.data.search)
+                setMovies(theList)
+            })
+            .catch(error => console.log('error: ', error))
+
     }
 
     //useEffect to run the sear
@@ -48,8 +77,16 @@ export default function Graphql() {
     }, []);
 
     const handleChange = (event) => {
-        event.preventDefault()
+        event.preventDefault();
 
+        let value = event.target.value
+        setSearchTerm(value);
+
+        if (value.length > 2) {
+            performSearch();
+        } else {
+            setMovies(fullList);
+        }
 
     }
 
