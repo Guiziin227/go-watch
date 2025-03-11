@@ -70,7 +70,7 @@ const EditMovie = () => {
                 headers: headers,
             }
 
-            fetch(`/genres`, requestOptions)
+            fetch(`http://localhost:8080/genres`, requestOptions)
                 .then((response) => response.json())
                 .then((data) => {
                     const checks = [];
@@ -99,7 +99,7 @@ const EditMovie = () => {
                 headers: headers
             };
 
-            fetch(`/admin/movies/${id}`, requestOptions)
+            fetch(`http://localhost:8080/admin/movies/${id}`, requestOptions)
                 .then((response) => {
                     if (response.status) {
                         if (response.status !== 200) {
@@ -195,7 +195,7 @@ const EditMovie = () => {
             credentials: "include",
         }
 
-        fetch(`/admin/movies/${movie.id}`, requestOptions)
+        fetch(`http://localhost:8080/admin/movies/${movie.id}`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -257,7 +257,7 @@ const EditMovie = () => {
                     method: "DELETE",
                     headers: headers,
                 }
-                fetch(`/admin/movies/${movie.id}`, requestOptions)
+                fetch(`http://localhost:8080/admin/movies/${movie.id}`, requestOptions)
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.error) {

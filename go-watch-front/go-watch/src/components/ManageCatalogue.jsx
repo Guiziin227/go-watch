@@ -68,7 +68,11 @@ export default function ManageCatalogue() {
                             <td>
                                 <Link to={`/admin/movie/${m.id}`}>{m.title}</Link>
                             </td>
-                            <td>{m.release_date}</td>
+                            <td>{new Date(m.release_date).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                            })}</td>
                             <td>{m.runtime}</td>
                             <td>{m.mpaa_rating}</td>
                         </tr>
