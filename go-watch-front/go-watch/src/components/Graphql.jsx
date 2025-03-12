@@ -33,7 +33,7 @@ export default function Graphql() {
             body: payload
         }
 
-        fetch(`http://localhost:8080/graph`, requestOptions)
+        fetch(`${import.meta.env.VITE_REACT_APP_BACKEND}/graph`, requestOptions)
             .then(response => response.json())
             .then(response => {
                 let theList = Object.values(response.data.search)
@@ -66,7 +66,7 @@ export default function Graphql() {
             body: payload
         }
 
-        fetch(`http://localhost:8080/graph`, requestOptions)
+        fetch(`${import.meta.env.VITE_REACT_APP_BACKEND}/graph`, requestOptions)
             .then(response => response.json())
             .then(response => {
                 let theList = Object.values(response.data.list)

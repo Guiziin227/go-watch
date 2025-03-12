@@ -31,7 +31,7 @@ const Login = () => {
       body: JSON.stringify(payload),
     }
 
-    fetch(`http://localhost:8080/authenticate`, requestOptions)
+    fetch(`${import.meta.env.VITE_REACT_APP_BACKEND}/authenticate`, requestOptions)
         .then((response) => response.json())
         .then((data) => {
           if (data.error) {

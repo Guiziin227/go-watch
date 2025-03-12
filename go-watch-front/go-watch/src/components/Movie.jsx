@@ -20,7 +20,7 @@ export default function Movie() {
                     headers: headers,
                 }
 
-                const response = await fetch(`http://localhost:8080/movies/${id}`, requestOptions)
+                const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND}/movies/${id}`, requestOptions)
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`)
                 }

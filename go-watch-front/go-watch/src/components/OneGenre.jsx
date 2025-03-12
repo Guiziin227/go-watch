@@ -24,7 +24,7 @@ export function OneGenre() {
             headers: headers,
         }
 
-        fetch(`http://localhost:8080/movies/genres/${id}`, requestOptions)
+        fetch(`${import.meta.env.VITE_REACT_APP_BACKEND}/movies/genres/${id}`, requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data.error) {

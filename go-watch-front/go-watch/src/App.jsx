@@ -17,14 +17,14 @@ function App() {
             credentials: "include",
         }
 
-        fetch(`http://localhost:8080/logout?t=${new Date().getTime()}`, requestOptions)
-            .catch(error => {
-                console.log("error logging out", error);
-            })
-            .finally(() => {
-                setJwtToken("");
-                toggleRefresh(false)
-            })
+      fetch(`${import.meta.env.VITE_REACT_APP_BACKEND}/logout?t=${new Date().getTime()}`, requestOptions)
+        .catch(error => {
+          console.log("error logging out", error);
+        })
+        .finally(() => {
+          setJwtToken("");
+          toggleRefresh(false);
+        });
 
         navigate("/login");
     }
@@ -40,7 +40,7 @@ function App() {
                     credentials: "include",
                 }
 
-                fetch(`/refresh`, requestOptions)
+                fetch(`${import.meta.env.VITE_REACT_APP_BACKEND}/refresh`, requestOptions)
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.access_token) {
@@ -69,7 +69,7 @@ function App() {
                 credentials: "include",
             }
 
-            fetch(`http://localhost:8080/refresh`, requestOptions)
+            fetch(`${import.meta.env.VITE_REACT_APP_BACKEND}/refresh`, requestOptions)
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.access_token) {

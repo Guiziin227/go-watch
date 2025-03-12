@@ -15,7 +15,7 @@ export default function Genres() {
             headers: headers,
         }
 
-        fetch("http://localhost:8080/genres", requestOptions)
+        fetch(`${import.meta.env.VITE_REACT_APP_BACKEND}/genres`, requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data.error) {

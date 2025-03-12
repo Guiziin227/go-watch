@@ -31,7 +31,7 @@ export default function ManageCatalogue() {
             try {
                 // Aguarda a resposta da requisição
                 const response = await fetch(
-                    'http://localhost:8080/admin/movies',
+                    `${import.meta.env.VITE_REACT_APP_BACKEND}/admin/movies`,
                     requestOptions
                 )
                 // Converte a resposta para JSON
